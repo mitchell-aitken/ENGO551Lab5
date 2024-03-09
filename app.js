@@ -76,13 +76,12 @@ function updateMarkerIconAndPopup(temperature) {
 // Function to create a custom icon
 function createCustomIcon(color) {
     return L.divIcon({
-        className: 'custom-div-icon',
-        html: "<div style='background-color:" + color + ";'></div>",
-        iconSize: [30, 42],
-        iconAnchor: [15, 42]
+        className: 'custom-color-marker',
+        html: "<div style='background-color: " + color + "; width: 10px; height: 10px; border-radius: 50%;'></div>",
+        iconSize: [10, 10],
+        iconAnchor: [5, 5]
     });
 }
-
 
 function getTemperatureColor(temperature) {
     if (temperature < 10) return 'blue';
