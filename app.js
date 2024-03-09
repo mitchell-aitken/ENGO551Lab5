@@ -6,15 +6,17 @@ function connectToMQTT() {
     var host = document.getElementById('mqtt_host').value; // 'broker.emqx.io'
     var port = parseInt(document.getElementById('mqtt_port').value); // Should be 8084 for WSS
 
-    // The Paho client expects the host without the protocol and the path
-    host = host.replace('wss://', '').replace('/mqtt', ''); // Ensure host is clean
-
+    // Initialize the MQTT Client
     client = new Paho.MQTT.Client(host, port, "clientId" + new Date().getTime());
 
+    // Set the callback function for when messages are received
+    client.onMessageArrived = onMessageArrived;
+
+    // Connect the client, providing the onSuccess and onFailure callback handlers
     client.connect({
         onSuccess: onConnect,
         onFailure: onFailure,
-        useSSL: true // Set true if connecting over WSS
+        useSSL: true // Set to true if connecting over WSS
     });
 }
 
