@@ -46,20 +46,21 @@ function onMessageArrived(message) {
     var receivedData = JSON.parse(message.payloadString);
 
     if (receivedData.geometry && receivedData.properties.temperature) {
-        // Assuming the coordinates array is [longitude, latitude]
-        var coords = receivedData.geometry.coordinates;
+        // Extract coordinates
+        var longitude = receivedData.geometry.coordinates[0];
+        var latitude = receivedData.geometry.coordinates[1];
         var temperature = receivedData.properties.temperature;
 
-        // Update marker position (reversing coords for Leaflet's [lat, lng] format)
-        currentLocationMarker.setLatLng([coords[1], coords[0]]);
+        // Update marker position with latitude first, then longitude
+        currentLocationMarker.setLatLng([latitude, longitude]);
 
         // Ensure the map centers on the new marker position
-        map.setView([coords[1], coords[0]], map.getZoom());
+        map.setView([latitude, longitude], map.getZoom());
 
         // Update marker color based on temperature
         var iconColor = getTemperatureColor(temperature);
         var newIcon = L.icon({
-            iconUrl: iconColor + '_marker.png',
+            iconUrl: 'path/to/' + iconColor + '_marker.png', // Make sure the path is correct
             iconSize: [25, 41], // Size of the icon
             iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
             popupAnchor: [1, -34] // Point from which the popup should open relative to the iconAnchor
@@ -67,10 +68,10 @@ function onMessageArrived(message) {
         currentLocationMarker.setIcon(newIcon);
 
         // Update the popup content and show it
-        currentLocationMarker.getPopup().setContent("Temperature: " + temperature + "°C");
-        currentLocationMarker.openPopup();
+        currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
     }
 }
+
 
 
 function getTemperatureColor(temperature) {
