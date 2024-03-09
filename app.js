@@ -108,7 +108,7 @@ function publishLocation() {
         var geojsonMessage = {
             type: "Feature",
             properties: {
-                temperature: Math.random() * 50 - 40 // Cooking up a random temperature
+                temperature: Math.random() * 50 - 10 // Generates a random temperature between -10 and 40
             },
             geometry: {
                 type: "Point",
