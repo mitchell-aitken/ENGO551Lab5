@@ -44,21 +44,34 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
     console.log("Message arrived: " + message.payloadString);
     var receivedData = JSON.parse(message.payloadString);
+
     if (receivedData.geometry && receivedData.properties.temperature) {
+        // Assuming the coordinates array is [longitude, latitude]
         var coords = receivedData.geometry.coordinates;
         var temperature = receivedData.properties.temperature;
 
-        // Update marker position
+        // Update marker position (reversing coords for Leaflet's [lat, lng] format)
         currentLocationMarker.setLatLng([coords[1], coords[0]]);
+
+        // Ensure the map centers on the new marker position
+        map.setView([coords[1], coords[0]], map.getZoom());
 
         // Update marker color based on temperature
         var iconColor = getTemperatureColor(temperature);
-        currentLocationMarker.setIcon(new L.Icon({iconUrl: iconColor + '_marker.png'}));
+        var newIcon = L.icon({
+            iconUrl: iconColor + '_marker.png',
+            iconSize: [25, 41], // Size of the icon
+            iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+            popupAnchor: [1, -34] // Point from which the popup should open relative to the iconAnchor
+        });
+        currentLocationMarker.setIcon(newIcon);
 
-        // show temperature in a popup
-        currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
+        // Update the popup content and show it
+        currentLocationMarker.getPopup().setContent("Temperature: " + temperature + "°C");
+        currentLocationMarker.openPopup();
     }
 }
+
 
 function getTemperatureColor(temperature) {
     if (temperature < 10) return 'blue';
