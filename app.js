@@ -51,7 +51,7 @@ function onMessageArrived(message) {
 
         // Update marker color based on temperature
         var iconColor = getTemperatureColor(temperature);
-        currentLocationMarker.setIcon(new L.Icon({iconUrl: 'path/to/' + iconColor + '_marker.png'}));
+        currentLocationMarker.setIcon(new L.Icon({iconUrl: iconColor + '_marker.png'}));
 
         // show temperature in a popup
         currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
