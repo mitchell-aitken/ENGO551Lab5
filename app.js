@@ -79,6 +79,7 @@ function onMessageArrived(message) {
 
 
 
+
 function getTemperatureColor(temperature) {
     if (temperature < 10) return 'blue';
     else if (temperature < 30) return 'green';
