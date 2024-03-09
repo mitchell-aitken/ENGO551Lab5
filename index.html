@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IoT Geoweb App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 400px; }
+    </style>
+</head>
+<body>
+    <h1>IoT Geoweb Application</h1>
+    <div id="map"></div>
+    <input type="text" id="mqtt_host" value="broker.emqx.io" placeholder="Enter MQTT host">
+    <input type="number" id="mqtt_port" value="1883" placeholder="Enter MQTT port">
+    <button id="start">Start</button>
+    <button id="end" disabled>End</button>
+    <button id="share_status">Share My Status</button>
+    <script src="app.js"></script>
+</body>
+</html>
