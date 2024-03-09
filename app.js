@@ -42,29 +42,23 @@ function onConnectionLost(responseObject) {
 }
 
 function onMessageArrived(message) {
-    console.log("Message arrived: " + message.payloadString);
+    console.log("New message in town: " + message.payloadString);
     var receivedData = JSON.parse(message.payloadString);
 
     if (receivedData.geometry && receivedData.properties.temperature) {
-        // Extract coordinates and ensure they are numbers
-        var longitude = Number(receivedData.geometry.coordinates[0]);
-        var latitude = Number(receivedData.geometry.coordinates[1]);
+        var coords = receivedData.geometry.coordinates;
         var temperature = receivedData.properties.temperature;
 
-        console.log("Updating marker to Lat:", latitude, " Long:", longitude, " Temp:", temperature);
+        console.log("Latitude: " + coords[1] + ", Longitude: " + coords[0] + ", Temperature: " + temperature);
 
         // Update marker position with latitude first, then longitude
-        if (!isNaN(latitude) && !isNaN(longitude)) {
-            currentLocationMarker.setLatLng([latitude, longitude]);
+        currentLocationMarker.setLatLng([coords[1], coords[0]]);
 
-            // Ensure the map centers on the new marker position
-            map.setView([latitude, longitude], map.getZoom());
+        // Ensure the map centers on the new marker position
+        map.setView([coords[1], coords[0]], map.getZoom());
 
-            // Update marker icon and popup
-            updateMarkerIconAndPopup(temperature);
-        } else {
-            console.error("Invalid coordinates received:", latitude, longitude);
-        }
+        // Update marker color based on temperature
+        updateMarkerIconAndPopup(temperature);
     } else {
         console.error("Received data does not contain geometry and temperature properties.");
     }
@@ -72,17 +66,22 @@ function onMessageArrived(message) {
 
 function updateMarkerIconAndPopup(temperature) {
     var iconColor = getTemperatureColor(temperature);
-    var newIcon = L.icon({
-        iconUrl: iconColor + '_marker.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
-    });
+
+    // Assuming you have a function to create a custom icon based on the color
+    var newIcon = createCustomIcon(iconColor);
     currentLocationMarker.setIcon(newIcon);
     currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
 }
 
-
+// Function to create a custom icon
+function createCustomIcon(color) {
+    return L.divIcon({
+        className: 'custom-div-icon',
+        html: "<div style='background-color:" + color + ";'></div>",
+        iconSize: [30, 42],
+        iconAnchor: [15, 42]
+    });
+}
 
 
 function getTemperatureColor(temperature) {
