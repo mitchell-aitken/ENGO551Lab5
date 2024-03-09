@@ -80,7 +80,7 @@ function publishLocation() {
         };
 
         var message = new Paho.MQTT.Message(JSON.stringify(geojsonMessage));
-        message.destinationName = "<your course code>/<your name>/my_temperature";
+        message.destinationName = "ENGO551/Mitchell/my_temperature";
         client.send(message);
     });
 }
