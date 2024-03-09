@@ -45,9 +45,30 @@ function onConnectionLost(responseObject) {
 }
 
 function onMessageArrived(message) {
-    console.log("New message in town: " + message.payloadString);
-    // Got a new message, let's handle it (maybe update our map?)
+    console.log("Message arrived: " + message.payloadString);
+    var receivedData = JSON.parse(message.payloadString);
+    if (receivedData.geometry && receivedData.properties.temperature) {
+        var coords = receivedData.geometry.coordinates;
+        var temperature = receivedData.properties.temperature;
+
+        // Update marker position
+        currentLocationMarker.setLatLng([coords[1], coords[0]]);
+
+        // Update marker color based on temperature
+        var iconColor = getTemperatureColor(temperature);
+        currentLocationMarker.setIcon(new L.Icon({iconUrl: 'path/to/' + iconColor + '_marker.png'}));
+
+        // show temperature in a popup
+        currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
+    }
 }
+
+function getTemperatureColor(temperature) {
+    if (temperature < 10) return 'blue';
+    else if (temperature < 30) return 'green';
+    else return 'red';
+}
+
 
 function publishLocation() {
     // Fetch our current spot and send it off
