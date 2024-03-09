@@ -86,9 +86,19 @@ function createCustomIcon(color) {
 }
 
 function getTemperatureColor(temperature) {
-    if (temperature < 10) return 'blue';
-    else if (temperature < 30) return 'green';
-    else return 'red';
+    if (temperature < 10) {
+        // t below 10
+        console.log("Temperature Colour Blue");
+        return 'blue';
+    } else if (temperature >= 10 && temperature < 30) {
+        // between 10 and 30 (inclusive of 10, but exclusive of 30)
+        console.log("Temperature Colour Green");
+        return 'green';
+    } else {
+        // 30 and above (inclusive of 30 up to 60, and theoretically beyond)
+        console.log("Temperature Colour Red");
+        return 'red';
+    }
 }
 
 
