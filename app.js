@@ -3,24 +3,30 @@ var map; // This guy will hold our map
 var currentLocationMarker; // This marker shows where we are right now
 
 function connectToMQTT() {
-    // Grabbing the host and port the user typed in
     var host = document.getElementById('mqtt_host').value;
     var port = parseInt(document.getElementById('mqtt_port').value);
 
-    // Setting up our MQTT client. It's like dialing into the MQTT world!
-    client = new Paho.MQTT.Client(host, port, "clientId" + new Date().getTime());
+    // Use the appropriate WebSocket URL scheme (ws:// or wss://) depending on whether
+    // you want an encrypted connection. This should match what your broker expects.
+    var wsScheme = 'ws://';
+    if (port === 8081) { // This could be an indication that wss:// is required
+        wsScheme = 'wss://';
+    }
 
-    // When stuff happens, these functions get called
-    client.onConnectionLost = onConnectionLost;
-    client.onMessageArrived = onMessageArrived;
+    client = new Paho.MQTT.Client(wsScheme + host, port, "clientId" + new Date().getTime());
 
-    // Alright, let's make the connection!
+    // Configure your callback handlers here as you have in your original code...
+
+    // Connect the client with optional authentication (if needed)
     client.connect({
-        onSuccess: onConnect, // What to do once we're in
-        onFailure: onFailure, // What to do if we can't get in
-        useSSL: true // Securing our connection if we can
+        onSuccess: onConnect,
+        onFailure: onFailure,
+        useSSL: port === 8081, // Use SSL if port 8081 is used
+        userName: "<USERNAME>", // Add these if your broker requires authentication
+        password: "<PASSWORD>",
     });
 }
+
 
 function onConnect() {
     console.log("Woohoo! Connected to the MQTT broker!");
@@ -28,7 +34,7 @@ function onConnect() {
     document.getElementById('end').disabled = false;
 
     // Time to listen in on a specific topic
-    client.subscribe("<your course code>/<your name>/my_temperature");
+    client.subscribe("ENGO551/Mitchell/my_temperature");
 }
 
 function onFailure(errorMessage) {
