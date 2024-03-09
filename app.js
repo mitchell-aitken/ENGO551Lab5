@@ -56,6 +56,7 @@ function onMessageArrived(message) {
 
         // Ensure the map centers on the new marker position
         map.setView([latitude, longitude], map.getZoom());
+        console.log("Lat:" + latitude + " , Longitude:" + longitude);
 
         // Update marker color based on temperature
         var iconColor = getTemperatureColor(temperature);
