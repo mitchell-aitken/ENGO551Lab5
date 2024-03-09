@@ -15,8 +15,6 @@ function connectToMQTT() {
     });
 }
 
-
-
 function onConnect() {
     console.log("Woohoo! Connected to the MQTT broker!");
     document.getElementById('start').disabled = true;
