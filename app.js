@@ -3,29 +3,18 @@ var map; // This guy will hold our map
 var currentLocationMarker; // This marker shows where we are right now
 
 function connectToMQTT() {
-    var host = document.getElementById('mqtt_host').value;
-    var port = parseInt(document.getElementById('mqtt_port').value);
+    var host = document.getElementById('mqtt_host').value; // 'broker.emqx.io'
+    var port = parseInt(document.getElementById('mqtt_port').value); // Should be 8084 for WSS
 
-    // Use the appropriate WebSocket URL scheme (ws:// or wss://) depending on whether
-    // you want an encrypted connection. This should match what your broker expects.
-    var wsScheme = 'ws://';
-    if (port === 8081) { // This could be an indication that wss:// is required
-        wsScheme = 'wss://';
-    }
+    client = new Paho.MQTT.Client('wss://' + host, port, "clientId" + new Date().getTime());
 
-    client = new Paho.MQTT.Client(wsScheme + host, port, "clientId" + new Date().getTime());
-
-    // Configure your callback handlers here as you have in your original code...
-
-    // Connect the client with optional authentication (if needed)
     client.connect({
         onSuccess: onConnect,
         onFailure: onFailure,
-        useSSL: port === 8081, // Use SSL if port 8081 is used
-        userName: "<USERNAME>", // Add these if your broker requires authentication
-        password: "<PASSWORD>",
+        useSSL: true // using WSS, this should be true
     });
 }
+
 
 
 function onConnect() {
