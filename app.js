@@ -61,7 +61,7 @@ function onMessageArrived(message) {
         // Update marker color based on temperature
         var iconColor = getTemperatureColor(temperature);
         var newIcon = L.icon({
-            iconUrl: 'path/to/' + iconColor + '_marker.png', // Make sure the path is correct
+            iconUrl: iconColor + '_marker.png', // Make sure the path is correct
             iconSize: [25, 41], // Size of the icon
             iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
             popupAnchor: [1, -34] // Point from which the popup should open relative to the iconAnchor
