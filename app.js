@@ -44,24 +44,26 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
     console.log("Message arrived: " + message.payloadString);
     var receivedData = JSON.parse(message.payloadString);
+    console.log("Parsed Data: ", receivedData); // Log the parsed data for debugging
 
     if (receivedData.geometry && receivedData.properties.temperature) {
         // Extract coordinates
         var longitude = receivedData.geometry.coordinates[0];
         var latitude = receivedData.geometry.coordinates[1];
         var temperature = receivedData.properties.temperature;
+        console.log("Extracted Coordinates - Latitude: " + latitude + ", Longitude: " + longitude); // Log for debugging
+        console.log("Extracted Temperature: " + temperature); // Log for debugging
 
         // Update marker position with latitude first, then longitude
         currentLocationMarker.setLatLng([latitude, longitude]);
 
         // Ensure the map centers on the new marker position
         map.setView([latitude, longitude], map.getZoom());
-        console.log("Lat:" + latitude + " , Longitude:" + longitude);
 
         // Update marker color based on temperature
         var iconColor = getTemperatureColor(temperature);
         var newIcon = L.icon({
-            iconUrl: iconColor + '_marker.png', // Make sure the path is correct
+            iconUrl: iconColor + '_marker.png', // Ensure the path is correct
             iconSize: [25, 41], // Size of the icon
             iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
             popupAnchor: [1, -34] // Point from which the popup should open relative to the iconAnchor
@@ -70,6 +72,8 @@ function onMessageArrived(message) {
 
         // Update the popup content and show it
         currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
+    } else {
+        console.log("Message does not contain expected data structure."); // Log for debugging
     }
 }
 
