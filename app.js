@@ -11,6 +11,7 @@ function connectToMQTT() {
 
     // Set the callback function for when messages are received
     client.onMessageArrived = onMessageArrived;
+    client.onConnectionLost = onConnectionLost;
 
     // Connect the client, providing the onSuccess and onFailure callback handlers
     client.connect({
@@ -37,11 +38,16 @@ function onFailure(errorMessage) {
 
 function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
-        console.log("Oops, connection lost: " + responseObject.errorMessage);
-        // Should we try to reconnect automatically or just inform the user?
-        connectToMQTT(); // Let's try getting back on
+        console.log("Connection lost:", responseObject.errorMessage);
+
+        // add  delay before reconnecting
+        setTimeout(() => {
+            console.log("Attempting to reconnect...");
+            connectToMQTT(); // tries to connect again
+        }, 5000); // Reconnect after 5 seconds
     }
 }
+
 
 function onMessageArrived(message) {
     console.log("New message in town: " + message.payloadString);
