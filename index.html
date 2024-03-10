@@ -18,6 +18,10 @@
         #map { height: 400px; }
         #status { color: green; }
         .disabled { color: gray; }
+        #mqtt_settings {
+        display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -32,8 +36,10 @@
     <div id="map"></div>
 
     <!-- User inputs for MQTT connection details -->
+    <div id="mqtt_settings">
     <input type="text" id="mqtt_host" value="broker.emqx.io" placeholder="Enter MQTT host">
     <input type="number" id="mqtt_port" value="8084" placeholder="Enter MQTT port">
+    </div>
 
     <!-- Start/End buttons to manage the MQTT connection -->
     <button id="start">Start</button>
@@ -49,5 +55,19 @@
 
     <!-- linking to JavaScript logic -->
     <script src="app.js"></script>
+
+    <!-- to hide host/port-->
+    <script>
+    document.getElementById('start').addEventListener('click', function() {
+        document.getElementById('mqtt_settings').style.display = 'none';
+        // Other start connection logic...
+    });
+
+    document.getElementById('end').addEventListener('click', function() {
+        document.getElementById('mqtt_settings').style.display = 'block';
+        // Other disconnect logic...
+    });
+    </script>
+
 </body>
 </html>
