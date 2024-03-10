@@ -37,8 +37,8 @@
 
     <!-- User inputs for MQTT connection details -->
     <div id="mqtt_settings">
-    <input type="text" id="mqtt_host" value="broker.emqx.io" placeholder="Enter MQTT host">
-    <input type="number" id="mqtt_port" value="8084" placeholder="Enter MQTT port">
+        <input type="text" id="mqtt_host" value="broker.emqx.io" placeholder="Enter MQTT host">
+        <input type="number" id="mqtt_port" value="8084" placeholder="Enter MQTT port">
     </div>
 
     <!-- Start/End buttons to manage the MQTT connection -->
@@ -57,14 +57,13 @@
     <script>
         document.getElementById('start').addEventListener('click', function() {
             document.getElementById('mqtt_settings').style.display = 'none'; // Hide settings on start
-            // Additional code to handle MQTT connection...
         });
 
         document.getElementById('end').addEventListener('click', function() {
             document.getElementById('mqtt_settings').style.display = 'block'; // Show settings on end
-            // Additional code to handle MQTT disconnection...
         });
     </script>
+
 
     <!-- linking to JavaScript logic -->
     <script src="app.js"></script>
