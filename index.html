@@ -17,11 +17,16 @@
     <h1>IoT Geoweb Application - ENGO 551 </h1>
     <div id="status">Disconnected</div>
     <div id="map"></div>
+
     <input type="text" id="mqtt_host" value="broker.emqx.io" placeholder="Enter MQTT host">
     <input type="number" id="mqtt_port" value="8084" placeholder="Enter MQTT port">
     <button id="start">Start</button>
     <button id="end" disabled>End</button>
     <button id="share_status">Share My Status</button>
+    <input type="text" id="publish_topic" placeholder="Enter topic to publish">
+    <textarea id="publish_message" placeholder="Enter message to publish"></textarea>
+    <button id="publish">Publish</button>
+
     <script src="app.js"></script>
     <script>
     </script>

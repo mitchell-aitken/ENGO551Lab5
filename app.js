@@ -136,6 +136,23 @@ document.getElementById('end').addEventListener('click', function() {
 });
 document.getElementById('share_status').addEventListener('click', publishLocation);
 
+function publishMessage() {
+    var topic = document.getElementById('publish_topic').value;
+    var messageContent = document.getElementById('publish_message').value;
+
+    if (!topic) {
+        alert("Please enter a topic.");
+        return;
+    }
+
+    var message = new Paho.MQTT.Message(messageContent);
+    message.destinationName = topic;
+    client.send(message);
+}
+
+document.getElementById('publish').addEventListener('click', publishMessage);
+
+
 // Let's set up our map initially
 function initMap() {
     map = L.map('map').setView([0, 0], 13); // Starting point
