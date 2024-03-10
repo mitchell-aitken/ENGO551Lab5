@@ -1,11 +1,18 @@
+<!-- ENGO 551 HTML Code Lab 5 - Mitchell Aitken -->
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IoT Geoweb App</title>
+    <!-- Setting up the basics: title and responsive design -->
+    <title>IoT Geoweb App by Mitchell Aitken</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Loading scripts for MQTT and Leaflet -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Some in-line CSS to keep things looking neat -->
     <style>
         body { font-family: Arial, sans-serif; }
         #map { height: 400px; }
@@ -14,21 +21,33 @@
     </style>
 </head>
 <body>
-    <h1>IoT Geoweb Application - ENGO 551 </h1>
+    <!-- big title -->
+    <h1>IoT Geoweb Application </h1>
+    <h2> ENGO 551 - Mitchell Aitken</h2>
+
+    <!-- A little status indicator to show MQTT connection status -->
     <div id="status">Disconnected</div>
+
+    <!-- The map will pop up right here -->
     <div id="map"></div>
 
+    <!-- User inputs for MQTT connection details -->
     <input type="text" id="mqtt_host" value="broker.emqx.io" placeholder="Enter MQTT host">
     <input type="number" id="mqtt_port" value="8084" placeholder="Enter MQTT port">
+
+    <!-- Start/End buttons to manage the MQTT connection -->
     <button id="start">Start</button>
     <button id="end" disabled>End</button>
+
+    <!-- share status button -->
     <button id="share_status">Share My Status</button>
+
+    <!-- Custom topic and message publishing -->
     <input type="text" id="publish_topic" placeholder="Enter topic to publish">
     <textarea id="publish_message" placeholder="Enter message to publish"></textarea>
     <button id="publish">Publish</button>
 
+    <!-- linking to JavaScript logic -->
     <script src="app.js"></script>
-    <script>
-    </script>
 </body>
 </html>

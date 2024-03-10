@@ -1,3 +1,5 @@
+// ENGO 551 JS Code Lab 5 Mitchell Aitken
+
 var client; // Here's our MQTT client
 var map; // This guy will hold our map
 var currentLocationMarker; // This marker shows where we are right now
@@ -9,7 +11,7 @@ function connectToMQTT() {
     // Initialize the MQTT Client
     client = new Paho.MQTT.Client(host, port, "clientId" + new Date().getTime());
 
-    // Set the callback function for when messages are received
+    // set the callback function for when messages are received
     client.onMessageArrived = onMessageArrived;
     client.onConnectionLost = onConnectionLost;
 
@@ -27,13 +29,13 @@ function onConnect() {
     document.getElementById('start').disabled = true;
     document.getElementById('end').disabled = false;
 
-    // Time to listen in on a specific topic
+    // listen in on a specific topic
     client.subscribe("ENGO551/Mitchell/my_temperature");
 }
 
+// function to show cant connect, and connections lost
 function onFailure(errorMessage) {
     console.log("Uh-oh, couldn't connect: " + errorMessage.errorMessage);
-    // Maybe try reconnecting, or let the user know
 }
 
 function onConnectionLost(responseObject) {
@@ -59,10 +61,10 @@ function onMessageArrived(message) {
 
         console.log("Latitude: " + coords[1] + ", Longitude: " + coords[0] + ", Temperature: " + temperature);
 
-        // Update marker position with latitude first, then longitude
+        // update marker position with latitude first, then longitude
         currentLocationMarker.setLatLng([coords[1], coords[0]]);
 
-        // Ensure the map centers on the new marker position
+        // make the map center on the new marker position
         map.setView([coords[1], coords[0]], map.getZoom());
 
         // Update marker color based on temperature
@@ -75,13 +77,13 @@ function onMessageArrived(message) {
 function updateMarkerIconAndPopup(temperature) {
     var iconColor = getTemperatureColor(temperature);
 
-    // Assuming you have a function to create a custom icon based on the color
+    // calls  a function to create a custom icon based on the color
     var newIcon = createCustomIcon(iconColor);
     currentLocationMarker.setIcon(newIcon);
     currentLocationMarker.bindPopup("Temperature: " + temperature + "°C").openPopup();
 }
 
-// Function to create a custom icon
+// function to create a custom icon (based on color)
 function createCustomIcon(color) {
     return L.divIcon({
         className: 'custom-color-marker',
@@ -128,7 +130,7 @@ function publishLocation() {
     });
 }
 
-// When the user clicks 'start', let's get this party started
+// when the user clicks 'start', let's get this party started
 document.getElementById('start').addEventListener('click', connectToMQTT);
 document.getElementById('end').addEventListener('click', function() {
     client.disconnect();
@@ -153,7 +155,7 @@ function publishMessage() {
 document.getElementById('publish').addEventListener('click', publishMessage);
 
 
-// Let's set up our map initially
+// initial map set up
 function initMap() {
     map = L.map('map').setView([0, 0], 13); // Starting point
 
