@@ -53,21 +53,22 @@
     <textarea id="publish_message" placeholder="Enter message to publish"></textarea>
     <button id="publish">Publish</button>
 
+        <!-- to hide host/port-->
+    <script>
+        document.getElementById('start').addEventListener('click', function() {
+            document.getElementById('mqtt_settings').style.display = 'none'; // Hide settings on start
+            // Additional code to handle MQTT connection...
+        });
+
+        document.getElementById('end').addEventListener('click', function() {
+            document.getElementById('mqtt_settings').style.display = 'block'; // Show settings on end
+            // Additional code to handle MQTT disconnection...
+        });
+    </script>
+
     <!-- linking to JavaScript logic -->
     <script src="app.js"></script>
 
-    <!-- to hide host/port-->
-    <script>
-    document.getElementById('start').addEventListener('click', function() {
-        document.getElementById('mqtt_settings').style.display = 'block';
-        // Other start connection logic...
-    });
-
-    document.getElementById('end').addEventListener('click', function() {
-        document.getElementById('mqtt_settings').style.display = 'none';
-        // Other disconnect logic...
-    });
-    </script>
 
 </body>
 </html>
