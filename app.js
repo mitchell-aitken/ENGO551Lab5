@@ -23,26 +23,22 @@ function connectToMQTT() {
 
 
 function onConnect() {
-    console.log("Connected to the MQTT broker!");
-    document.getElementById('status').textContent = 'Connected';
+    console.log("Woohoo! Connected to the MQTT broker!");
     document.getElementById('start').disabled = true;
     document.getElementById('end').disabled = false;
-    document.getElementById('mqtt_host').disabled = true;
-    document.getElementById('mqtt_port').disabled = true;
 
     // Time to listen in on a specific topic
     client.subscribe("ENGO551/Mitchell/my_temperature");
 }
 
 function onFailure(errorMessage) {
-    console.log("Could not connect: " + errorMessage.errorMessage);
-    document.getElementById('status').textContent = 'Disconnected - Connection Failed';
+    console.log("Uh-oh, couldn't connect: " + errorMessage.errorMessage);
+    // Maybe try reconnecting, or let the user know
 }
 
 function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
-        console.log("Connection lost: " + responseObject.errorMessage);
-        document.getElementById('status').textContent = 'Disconnected - Attempting to Reconnect...';
+        console.log("Connection lost:", responseObject.errorMessage);
 
         // add  delay before reconnecting
         setTimeout(() => {
